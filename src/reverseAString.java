@@ -26,7 +26,7 @@ public class reverseAString {
 			strreversed.append(chars[i]);					//Append all the chars from the string to the new StringBuffer in reverse order.
 		}
 		
-		System.out.print(strreversed); 
+		System.out.print(strreversed);
 	}
 
 }
