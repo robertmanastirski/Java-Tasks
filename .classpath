@@ -5,6 +5,7 @@
 	<classpathentry kind="src" path="Symmetrical Number"/>
 	<classpathentry kind="src" path="LuckyTicket"/>
 	<classpathentry kind="src" path="BathroomTileCalculator"/>
+	<classpathentry kind="src" path="Fibonacci"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
