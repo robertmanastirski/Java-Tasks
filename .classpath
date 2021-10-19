@@ -3,6 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="OpenClosedPrinciple"/>
 	<classpathentry kind="src" path="Symmetrical Number"/>
+	<classpathentry kind="src" path="LuckyTicket"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
