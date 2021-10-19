@@ -18,7 +18,7 @@ public class Fibonacci {
 	public static void main(String[] args) {
 		int N = 0;
 		Scanner sc = new Scanner(System.in);
-		do										//Get a 6 digit input
+		do										
 		{
 			System.out.println("Please input N: ");
 			N = sc.nextInt();
