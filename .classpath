@@ -8,6 +8,7 @@
 	<classpathentry kind="src" path="Fibonacci"/>
 	<classpathentry kind="src" path="FibonacciIndexN"/>
 	<classpathentry kind="src" path="MinMaxNumberDifference"/>
+	<classpathentry kind="src" path="FindMaxNumAndPosition"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
