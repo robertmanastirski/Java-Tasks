@@ -12,9 +12,9 @@ public class Membership extends Customer {
             case "Diamond":
             discountedPrice = super.getPrice() - (super.getPrice() * 20 / 100); break;
             case "Gold":
-            discountedPrice = super.getPrice() - (super.getPrice() * 20 / 100); break;
+            discountedPrice = super.getPrice() - (super.getPrice() * 15 / 100); break;
             case "Silver":
-            discountedPrice = super.getPrice() - (super.getPrice() * 20 / 100); break;
+            discountedPrice = super.getPrice() - (super.getPrice() * 10 / 100); break;
         }
         return discountedPrice;
     }
