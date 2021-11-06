@@ -3,6 +3,7 @@ import java.util.Scanner;
 
 public class UI {
     Scanner sc = new Scanner(System.in);
+    Operations op = new Operations();
     private void pressAnyKeyToContinue()
     { 
         System.out.println("Press Enter key to continue...");
@@ -13,26 +14,30 @@ public class UI {
         catch(Exception e)
         {}  
     }
-    public void selectStudent(ArrayList<Student> studentsList)
+    public void selectFirstOption(ArrayList<Specialty> specialtyList)
     {
-        int selectedStudent = 0;
-        
-        System.out.println("Students: ");
-        for (Student s : studentsList ) {
-            System.out.println("Name: " + s.getName() + ", Faculty number: " + s.getFacultyNumber());
-        }
+        int selectedOption = 0;
+        System.out.println("1: Get information about a student");               //TODO - HANDLE EXCEPTION WHEN THERE ARE NO ADDED STUDENTS !
+        System.out.println("2: Get information about specialty");
         do {
-            System.out.print("Please select a student by faculty number: ");
-            selectedStudent = sc.nextInt();
-        } while (selectedStudent < 1 || selectedStudent > studentsList.size());
+            System.out.print("Please select an option: ");
+            selectedOption = sc.nextInt();
+            
+        } while (selectedOption < 1 || selectedOption > 3);
         
-        selectOption(selectedStudent, studentsList);
+        switch(selectedOption)
+        {
+            case 1: op.selectStudent();
+                    selectStudentOption(specialtyList);
+                    break;
+            case 2: selectSpecialty(specialtyList); break; 
+        }
     }
-    public void selectOption(int selectedStudent, ArrayList<Student> studentsList)
+
+    public void selectStudentOption(ArrayList<Specialty> specialtyList)
     {
-        Operations op = new Operations();
         int selection = 0;
-        System.out.println("1: Add subject & grade.");
+        System.out.println("1: Add a grade for a subject.");
         System.out.println("2: How many subject is the student in.");
         System.out.println("3: List of the subjects that the student is in.");
         System.out.println("4: Check a grade for a subject");
@@ -44,38 +49,80 @@ public class UI {
             selection = sc.nextInt();
         } while (selection < 0 || selection > 6);
         
-        op.findStudent(studentsList, selectedStudent);
         switch(selection)
         {
             case 1: op.addSubjectAndGrade();
                     pressAnyKeyToContinue();
-                    selectOption(selectedStudent, studentsList);
+                    selectStudentOption(specialtyList);
                     break;
             case 2: op.subjectCount();
                     pressAnyKeyToContinue();
-                    selectOption(selectedStudent, studentsList);
+                    selectStudentOption(specialtyList);
                     break;
             case 3: op.listOfSubjects();
                     pressAnyKeyToContinue();
-                    selectOption(selectedStudent, studentsList);
+                    selectStudentOption(specialtyList);
                     break;
             case 4: op.subjectGrade();
                     pressAnyKeyToContinue();
-                    selectOption(selectedStudent, studentsList);
+                    selectStudentOption(specialtyList);
                     break;
             case 5: op.averageScore();
                     pressAnyKeyToContinue();
-                    selectOption(selectedStudent, studentsList);
+                    selectStudentOption(specialtyList);
                     break;
             case 6: op.getInfo();
                     pressAnyKeyToContinue();
-                    selectOption(selectedStudent, studentsList);
+                    selectStudentOption(specialtyList);
                     break;
             case 0: System.exit(0); break;
+            case -1: selectFirstOption(specialtyList); break;
         
         }
-        
-        
     }
+    public void selectSpecialty(ArrayList<Specialty> specialtyList)
+    {
+        int selectedSpecialty = 0;
+        
+        System.out.println("Specialties: ");
+        for (Specialty s : specialtyList ) {
+            System.out.println(specialtyList.indexOf(s) + 1 + ": " +"Specialty Name: " + s.getName() + ", Course Year: " + s.getCourseYear());
+        }
+        do {
+            System.out.print("Please select a specialty: ");
+            selectedSpecialty = sc.nextInt();
+        } while (selectedSpecialty < 1 || selectedSpecialty > specialtyList.size());
+        
+        selectSpecialtyOption(selectedSpecialty, specialtyList);
+    }
+    public void selectSpecialtyOption(int selectedSpecialty, ArrayList<Specialty> specialtyList)
+    {
+        int selection = 0;
+        System.out.println("1: Add student to specialty.");
+        System.out.println("2: View specialty information");
+        System.out.println("3: View students by subject");
+        System.out.println("4: View average score for a subject");
+        System.out.println("5: View avreage score for the specialty");
+        System.out.println("6: View the best students");
+        System.out.println("0: Exit");
+        System.out.println("-1: Return to selecting information about a specialty or a student");
+        do {
+            System.out.print("Please select an option: ");
+            selection = sc.nextInt();
+        } while (selection < -1 || selection > 6);
+        
+        op.findSpecialty(specialtyList, selectedSpecialty);
+        switch(selection)
+        {
+            case 1: op.addStudentToSpecialty();
+                    pressAnyKeyToContinue();
+                    selectSpecialtyOption(selectedSpecialty, specialtyList);
+                    break;
+                    //TODO FOR SPECIALTY - ADD THE OTHER FUNCTIONS
+            case 0: System.exit(0); break;
+            case -1: selectFirstOption(specialtyList); break;
+        
+        }
     
+    }
 }

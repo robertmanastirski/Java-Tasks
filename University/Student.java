@@ -5,16 +5,30 @@ import java.util.Map;
 public class Student {
     private String studentName;
     private int facultyNumber;
-    private LinkedHashMap<Subject, Integer> grades = new LinkedHashMap<>();
+    private ArrayList<Subject> electives;
+    private ArrayList<Subject> commonSubjects;
+    private ArrayList<Subject> allSubjects = new ArrayList<>();
     
-    public Student(String studentName, int facultyNumber)
+    
+    //private LinkedHashMap<Subject, Integer> grades = new LinkedHashMap<>();
+    
+    public Student(String studentName, int facultyNumber, ArrayList<Subject> commonSubjects, ArrayList<Subject> electives)
     {
         this.studentName = studentName;
         this.facultyNumber = facultyNumber;
+        allSubjects.addAll(commonSubjects);
+        allSubjects.addAll(electives);
     }
-    public void addSubjectGrade(String subjectName, int grade)
+    public int showSubjects()
     {
-        grades.put(new Subject(subjectName), grade);
+        for (Subject s : allSubjects ) {
+            System.out.println(allSubjects.indexOf(s) + 1 + ": " + s.getSubjectName());
+        }
+        return allSubjects.size();
+    }
+    public void addSubjectGrade(int selectedSubject, int grade)
+    {
+        allSubjects.get(selectedSubject - 1).setGrade(grade);
     }
     public String getName()
     {
@@ -26,23 +40,19 @@ public class Student {
     }
     public int getSubjectCount()
     {
-        return grades.size();
+        return allSubjects.size();
     }
     public ArrayList<Subject> getListOfsubjects()
     {
-        ArrayList<Subject> listOfSubjects = new ArrayList<>();
-        for (Subject key : grades.keySet() ) {
-            listOfSubjects.add(key);
-        }
-        return listOfSubjects;
+        return allSubjects;
     }
     public ArrayList<Integer> getGrades()
     {
         ArrayList<Integer> listOfGrades = new ArrayList<>();
-        for (Map.Entry<Subject, Integer> entry : grades.entrySet()) {
-            listOfGrades.add(entry.getValue());
+        for (Subject s : allSubjects) {
+            listOfGrades.add(s.getGrade());
         }
         return listOfGrades;
     }
-    
+
 }

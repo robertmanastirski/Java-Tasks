@@ -1,6 +1,7 @@
 public class Subject {
     
     private String subjectName;
+    private int grade;
     
     public Subject(String subjectName)
     {
@@ -10,5 +11,12 @@ public class Subject {
     {
         return subjectName;
     }
-    
+    public void setGrade(int grade)
+    {
+        this.grade = grade;
+    }
+    public int getGrade()
+    {
+        return grade;
+    }
 }
