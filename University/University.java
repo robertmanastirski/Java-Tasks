@@ -25,7 +25,7 @@ public class University {
     public static void main(String[] args) {
         loadSpecialty();
         UI ui = new UI();
-        ui.selectFirstOption(specialtyList);
+        ui.selectSpecialty(specialtyList);
         
     }
 }

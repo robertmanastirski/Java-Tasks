@@ -5,6 +5,8 @@ public class Specialty {
     private String Name;
     private int courseYear;
     private ArrayList<Subject> commonSubjects = new ArrayList<>();
+    private ArrayList<Subject> electives = new ArrayList<>();
+    private ArrayList<Subject> allSubjects = new ArrayList<>();
     private ArrayList<Student> students = new ArrayList<>();
     
     public Specialty(String name, int courseYear)
@@ -20,14 +22,30 @@ public class Specialty {
     {
         return courseYear;
     }
-    public void setSubjects()
+    public void setSubjects(ArrayList<Subject> electives)
     {
-          commonSubjects.add(new Subject("Programming with Java"));
-          commonSubjects.add(new Subject("Linear Algebra"));
-          commonSubjects.add(new Subject("Programming with C#"));
+        if (commonSubjects.isEmpty()) {
+            commonSubjects.add(new Subject("Programming with Java"));
+            commonSubjects.add(new Subject("Linear Algebra"));
+            commonSubjects.add(new Subject("Programming with C#"));
+        }
+        
+        for (Subject s : electives ) {
+            this.electives.add(s);
+        }
+        
     }
-    
-    public void addStudent(String studentName, int facultyNumber, ArrayList<Subject> electives)
+    public ArrayList<Subject> getSubjects()
+    {
+        if (allSubjects.isEmpty()) {
+            allSubjects.addAll(commonSubjects);
+            allSubjects.addAll(electives);
+            
+        }
+        
+        return allSubjects;
+    }
+    public void addStudent(String studentName, int facultyNumber)
     {
         students.add(new Student(studentName, facultyNumber, commonSubjects, electives));
         
@@ -35,5 +53,30 @@ public class Specialty {
     public ArrayList<Student> getStudents()
     {
         return students;
+    }
+    public void printInfo()
+    {
+        System.out.println("Common subjects: ");
+        for (Subject s : commonSubjects ) {
+            System.out.println(s.getSubjectName());
+        }
+        System.out.println("Elective subjects: ");
+        for (Subject s : electives ) {
+            System.out.println(s.getSubjectName());
+        }
+        System.out.println("Students count: " + students.size());
+        
+    }
+    
+    public ArrayList<Student> getStudentsBySubject(Subject subject)
+    {
+        ArrayList<Student> studentsBySubject = new ArrayList<>();
+        
+        for (Student s : students ) {
+            if (s.getListOfsubjects().contains(subject)) {
+                studentsBySubject.add(s);
+            }
+        }
+        return studentsBySubject;
     }
 }

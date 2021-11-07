@@ -9,20 +9,27 @@ public class Operations {
     Scanner sc = new Scanner(System.in);
     
     //Metods that handle student operations
-    public void selectStudent()
+    public Boolean selectStudent()
     {
         int selectedStudent = 0;
         
-        System.out.println("Students: ");
-        for (Student s : studentsList ) {
-            System.out.println(studentsList.indexOf(s) + 1 + ": " + "Name: " + s.getName());
+        try{
+            System.out.println("Students: ");
+            for (Student s : studentsList ) {
+                System.out.println(studentsList.indexOf(s) + 1 + ": " + "Name: " + s.getName());
+            }
+            do {
+                System.out.print("Please select a student: ");
+                selectedStudent = sc.nextInt();
+            } while (selectedStudent < 1 || selectedStudent > studentsList.size());
+
+            findStudent(selectedStudent);
+        }catch(NullPointerException e)
+        {
+            System.out.println("There sre currently no students in the system.");
+            return false;
         }
-        do {
-            System.out.print("Please select a student: ");
-            selectedStudent = sc.nextInt();
-        } while (selectedStudent < 1 || selectedStudent > studentsList.size());
-        
-        findStudent(selectedStudent);
+        return true;
     }
     public void findStudent(int selectedStudent)
     {
@@ -99,7 +106,7 @@ public class Operations {
     
     public void addStudentToSpecialty()
     {
-        selectedSpecialty.setSubjects();
+        
         ArrayList<Subject> electives = new ArrayList<>();
         
         String studentName = "", currentElective = "";
@@ -128,8 +135,30 @@ public class Operations {
             System.out.println("Input Y if you want to add another elective: ");
             
         } while (!currentElective.isEmpty() && sc.nextLine().equals("Y"));
-        
-        selectedSpecialty.addStudent(studentName, facultyNumber, electives);  
+        selectedSpecialty.setSubjects(electives);
+        selectedSpecialty.addStudent(studentName, facultyNumber);
     }
-    
+    public void printSpeciltyInfo()
+    {
+        selectedSpecialty.printInfo();
+    }
+    public void getStudentsBySubject()
+    {
+        int selection = 0;
+        ArrayList<Subject> allSubjects = selectedSpecialty.getSubjects();
+        
+        for (Subject s : allSubjects) {
+            System.out.println(allSubjects.indexOf(s) + 1 + ": " + s.getSubjectName());
+        }
+        
+        do {
+            System.out.print("Please select a subject: ");
+            selection = sc.nextInt();
+        } while (selection < 0 || selection > allSubjects.size());
+        
+        for (Student s : selectedSpecialty.getStudentsBySubject(allSubjects.get(selection - 1))) {
+            System.out.println(s.getName());
+        }
+        
+    }
 }

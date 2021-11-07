@@ -5,12 +5,9 @@ import java.util.Map;
 public class Student {
     private String studentName;
     private int facultyNumber;
-    private ArrayList<Subject> electives;
-    private ArrayList<Subject> commonSubjects;
+    //private ArrayList<Subject> electives;
+    //private ArrayList<Subject> commonSubjects;
     private ArrayList<Subject> allSubjects = new ArrayList<>();
-    
-    
-    //private LinkedHashMap<Subject, Integer> grades = new LinkedHashMap<>();
     
     public Student(String studentName, int facultyNumber, ArrayList<Subject> commonSubjects, ArrayList<Subject> electives)
     {

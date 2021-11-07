@@ -14,11 +14,11 @@ public class UI {
         catch(Exception e)
         {}  
     }
-    public void selectFirstOption(ArrayList<Specialty> specialtyList)
+    public void selectFirstOption(ArrayList<Specialty> specialtyList, int selectedSpecialty)
     {
         int selectedOption = 0;
-        System.out.println("1: Get information about a student");               //TODO - HANDLE EXCEPTION WHEN THERE ARE NO ADDED STUDENTS !
-        System.out.println("2: Get information about specialty");
+        System.out.println("1: Get information about a student in the specialty");               
+        System.out.println("2: Get information about the specialty");
         do {
             System.out.print("Please select an option: ");
             selectedOption = sc.nextInt();
@@ -27,14 +27,16 @@ public class UI {
         
         switch(selectedOption)
         {
-            case 1: op.selectStudent();
-                    selectStudentOption(specialtyList);
+            case 1: if (op.selectStudent()) {
+                        selectStudentOption(specialtyList,selectedSpecialty);
+                    }
+                    selectFirstOption(specialtyList, selectedSpecialty);
                     break;
-            case 2: selectSpecialty(specialtyList); break; 
+            case 2: selectSpecialtyOption(specialtyList, selectedSpecialty); break; 
         }
     }
 
-    public void selectStudentOption(ArrayList<Specialty> specialtyList)
+    public void selectStudentOption(ArrayList<Specialty> specialtyList, int selectedSpecialty)
     {
         int selection = 0;
         System.out.println("1: Add a grade for a subject.");
@@ -44,39 +46,40 @@ public class UI {
         System.out.println("5: Average grade for the student");
         System.out.println("6: Information about the student");
         System.out.println("0: Exit");
+        System.out.println("-1: Return to selecting information about a specialty or a student");
         do {
             System.out.print("Please select an option: ");
             selection = sc.nextInt();
-        } while (selection < 0 || selection > 6);
+        } while (selection < -1 || selection > 6);
         
         switch(selection)
         {
             case 1: op.addSubjectAndGrade();
                     pressAnyKeyToContinue();
-                    selectStudentOption(specialtyList);
+                    selectStudentOption(specialtyList,selectedSpecialty);
                     break;
             case 2: op.subjectCount();
                     pressAnyKeyToContinue();
-                    selectStudentOption(specialtyList);
+                    selectStudentOption(specialtyList,selectedSpecialty);
                     break;
             case 3: op.listOfSubjects();
                     pressAnyKeyToContinue();
-                    selectStudentOption(specialtyList);
+                    selectStudentOption(specialtyList,selectedSpecialty);
                     break;
             case 4: op.subjectGrade();
                     pressAnyKeyToContinue();
-                    selectStudentOption(specialtyList);
+                    selectStudentOption(specialtyList,selectedSpecialty);
                     break;
             case 5: op.averageScore();
                     pressAnyKeyToContinue();
-                    selectStudentOption(specialtyList);
+                    selectStudentOption(specialtyList,selectedSpecialty);
                     break;
             case 6: op.getInfo();
                     pressAnyKeyToContinue();
-                    selectStudentOption(specialtyList);
+                    selectStudentOption(specialtyList,selectedSpecialty);
                     break;
             case 0: System.exit(0); break;
-            case -1: selectFirstOption(specialtyList); break;
+            case -1: selectFirstOption(specialtyList, selectedSpecialty); break;
         
         }
     }
@@ -93,9 +96,10 @@ public class UI {
             selectedSpecialty = sc.nextInt();
         } while (selectedSpecialty < 1 || selectedSpecialty > specialtyList.size());
         
-        selectSpecialtyOption(selectedSpecialty, specialtyList);
+        selectFirstOption(specialtyList, selectedSpecialty);
+        //selectSpecialtyOption(selectedSpecialty, specialtyList);
     }
-    public void selectSpecialtyOption(int selectedSpecialty, ArrayList<Specialty> specialtyList)
+    public void selectSpecialtyOption(ArrayList<Specialty> specialtyList, int selectedSpecialty)
     {
         int selection = 0;
         System.out.println("1: Add student to specialty.");
@@ -109,6 +113,7 @@ public class UI {
         do {
             System.out.print("Please select an option: ");
             selection = sc.nextInt();
+            sc.nextLine();
         } while (selection < -1 || selection > 6);
         
         op.findSpecialty(specialtyList, selectedSpecialty);
@@ -116,11 +121,20 @@ public class UI {
         {
             case 1: op.addStudentToSpecialty();
                     pressAnyKeyToContinue();
-                    selectSpecialtyOption(selectedSpecialty, specialtyList);
+                    selectSpecialtyOption(specialtyList, selectedSpecialty);
                     break;
+            case 2: op.printSpeciltyInfo();
+                    pressAnyKeyToContinue();
+                    selectSpecialtyOption(specialtyList, selectedSpecialty);
+                    break;
+            case 3: op.getStudentsBySubject();
+                    pressAnyKeyToContinue();
+                    selectSpecialtyOption(specialtyList, selectedSpecialty);
+                    break;
+                    
                     //TODO FOR SPECIALTY - ADD THE OTHER FUNCTIONS
             case 0: System.exit(0); break;
-            case -1: selectFirstOption(specialtyList); break;
+            case -1: selectFirstOption(specialtyList, selectedSpecialty); break;
         
         }
     
