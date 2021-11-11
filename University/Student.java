@@ -1,7 +1,4 @@
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 public class Student {
     private String studentName;
     private int facultyNumber;
@@ -15,6 +12,9 @@ public class Student {
         this.facultyNumber = facultyNumber;
         allSubjects.addAll(commonSubjects);
         allSubjects.addAll(electives);
+        //this.commonSubjects = commonSubjects;
+        //this.electives = electives;
+        //testAdd();
     }
     public int showSubjects()
     {
@@ -43,6 +43,15 @@ public class Student {
     {
         return allSubjects;
     }
+    public ArrayList<String> getSubjectNames()
+    {
+        ArrayList<String> subjectNames = new ArrayList<>();
+        for (Subject s : allSubjects ) {
+            subjectNames.add(s.getSubjectName());
+        }
+        return subjectNames;
+    }
+    
     public ArrayList<Integer> getGrades()
     {
         ArrayList<Integer> listOfGrades = new ArrayList<>();
@@ -50,6 +59,15 @@ public class Student {
             listOfGrades.add(s.getGrade());
         }
         return listOfGrades;
+    }
+    public int getGradeForSubj(Subject subject)
+    {
+        for (Subject s : allSubjects ) {
+            if (s.getSubjectName().equals(subject.getSubjectName())) {
+                return s.getGrade();
+            }
+        }
+        return 0;
     }
 
 }

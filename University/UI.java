@@ -131,7 +131,10 @@ public class UI {
                     pressAnyKeyToContinue();
                     selectSpecialtyOption(specialtyList, selectedSpecialty);
                     break;
-                    
+            case 4: op.getAvgScore();
+                    pressAnyKeyToContinue();
+                    selectSpecialtyOption(specialtyList, selectedSpecialty);
+                    break;
                     //TODO FOR SPECIALTY - ADD THE OTHER FUNCTIONS
             case 0: System.exit(0); break;
             case -1: selectFirstOption(specialtyList, selectedSpecialty); break;

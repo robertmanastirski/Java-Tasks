@@ -1,11 +1,19 @@
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Specialty {
     private String Name;
     private int courseYear;
-    private ArrayList<Subject> commonSubjects = new ArrayList<>();
-    private ArrayList<Subject> electives = new ArrayList<>();
+    private ArrayList<Subject> commonSubjects = new ArrayList<>(Arrays.asList(
+                                                                new Subject("Programming with Java"),
+                                                                new Subject("Linear Algebra"),
+                                                                new Subject("Programming with C#") ));
+    private ArrayList<Subject> electives = new ArrayList<>(Arrays.asList(
+                                                            new Subject("IT Security"),
+                                                            new Subject("Programming with JavaScript"),
+                                                            new Subject("Android Programming"),
+                                                            new Subject("Programming with Python") ));
     private ArrayList<Subject> allSubjects = new ArrayList<>();
     private ArrayList<Student> students = new ArrayList<>();
     
@@ -22,32 +30,39 @@ public class Specialty {
     {
         return courseYear;
     }
-    public void setSubjects(ArrayList<Subject> electives)
+    public void setSubjects(/*ArrayList<Subject> toAddElectives*/)
     {
-        if (commonSubjects.isEmpty()) {
-            commonSubjects.add(new Subject("Programming with Java"));
-            commonSubjects.add(new Subject("Linear Algebra"));
-            commonSubjects.add(new Subject("Programming with C#"));
-        }
-        
-        for (Subject s : electives ) {
-            this.electives.add(s);
-        }
+//        commonSubjects.add(new Subject("Programming with Java"));
+//        commonSubjects.add(new Subject("Linear Algebra"));
+//        commonSubjects.add(new Subject("Programming with C#"));
+//        if (electives.isEmpty()) {
+//            electives.add(new Subject("IT Security"));
+//            electives.add(new Subject("Programming with JavaScript"));
+//            electives.add(new Subject("Android Programming"));
+//            electives.add(new Subject("Programming with Python"));
+//        }
         
     }
+    public ArrayList<Subject> getElectives()
+    {
+        return electives;
+    }
+    public ArrayList<Subject> getCommons()
+    {
+        return commonSubjects;
+    }
+    
     public ArrayList<Subject> getSubjects()
     {
         if (allSubjects.isEmpty()) {
             allSubjects.addAll(commonSubjects);
             allSubjects.addAll(electives);
-            
         }
-        
         return allSubjects;
     }
-    public void addStudent(String studentName, int facultyNumber)
+    public void addStudent(String studentName, int facultyNumber, ArrayList<Subject> electivesToBeAdded, ArrayList<Subject> commons)
     {
-        students.add(new Student(studentName, facultyNumber, commonSubjects, electives));
+        students.add(new Student(studentName, facultyNumber, commons, electivesToBeAdded));
         
     }
     public ArrayList<Student> getStudents()
@@ -73,10 +88,20 @@ public class Specialty {
         ArrayList<Student> studentsBySubject = new ArrayList<>();
         
         for (Student s : students ) {
-            if (s.getListOfsubjects().contains(subject)) {
-                studentsBySubject.add(s);
+            for (String str : s.getSubjectNames() ) {
+                if (subject.getSubjectName().contains(str)) {
+                    studentsBySubject.add(s);
+                }
             }
         }
         return studentsBySubject;
+    }
+    public ArrayList<Integer> GetAvgScore(Subject subject)
+    {
+        ArrayList<Integer> grades = new ArrayList<>();
+        for (Student s : students ) {
+            grades.add(s.getGradeForSubj(subject));
+        }
+        return grades;
     }
 }

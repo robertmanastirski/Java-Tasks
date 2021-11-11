@@ -39,6 +39,7 @@ public class Operations {
     {
         int grade, selectedSubject;
         int subjectLength = selected.showSubjects();
+        
         do {
             System.out.println("Select the subject: ");
             selectedSubject = sc.nextInt();
@@ -48,6 +49,7 @@ public class Operations {
         } while (selectedSubject < 0 || selectedSubject > subjectLength || grade < 2 || grade > 6);
         
         selected.addSubjectGrade(selectedSubject, grade);
+        
     }
     public void subjectCount()
     {
@@ -102,14 +104,23 @@ public class Operations {
     {
         selectedSpecialty = specilatyList.get(specialtySelection - 1);
         studentsList = selectedSpecialty.getStudents();
+        //selectedSpecialty.setSubjects();
     }
     
     public void addStudentToSpecialty()
     {
         
         ArrayList<Subject> electives = new ArrayList<>();
+        ArrayList<Subject> electivesToBeAdded = new ArrayList<>();
+        ArrayList<Subject> commonSubjects = new ArrayList<>();
+        for (Subject s : selectedSpecialty.getElectives() ) {
+            electives.add(new Subject(s.getSubjectName()));
+        }
+        for (Subject s : selectedSpecialty.getCommons() ) {
+            commonSubjects.add(new Subject(s.getSubjectName()));
+        }
         
-        String studentName = "", currentElective = "";
+        String studentName = "";
         int facultyNumber = 0;
         
         do {
@@ -118,25 +129,50 @@ public class Operations {
                 studentName = sc.nextLine();
             }
             if (facultyNumber < 1) {
-                System.out.println("Input the faculty number name: ");
+                System.out.println("Input the faculty number: ");
                 facultyNumber = sc.nextInt();
                 sc.nextLine();
             }
             
         } while (studentName.isEmpty() || facultyNumber < 1);
         
+        System.out.println("List of electives: ");
+        for (Subject s : electives ) {
+            System.out.println(electives.indexOf(s) + 1 + ": " + s.getSubjectName());
+        }
+        int selection;
+        boolean foundMatch = false;
         do {
-            System.out.print("Input the elective name: ");
-            currentElective = sc.nextLine();
-            if (!currentElective.isEmpty()) {
-                System.out.println("Elective added.: ");
-                electives.add(new Subject(currentElective));
-            }
+            do {
+                System.out.println("Please select an elective to add to the student: ");
+                selection = sc.nextInt();
+                sc.nextLine();
+                if (selection > 1 || selection < electives.size()) {
+                    if (!electivesToBeAdded.isEmpty()) {
+                        for (Subject s : electivesToBeAdded) {
+                            if (s.getSubjectName().equals(electives.get(selection - 1).getSubjectName())) {
+                                foundMatch = true;
+                                break;
+                            }
+                        }
+                        if (!foundMatch) {
+                            electivesToBeAdded.add(electives.get(selection - 1));
+                        }else
+                        {
+                            System.out.println("Elective already added.");
+                        }
+                    }else
+                    {
+                        electivesToBeAdded.add(electives.get(selection - 1));
+                    }
+                }
+                
+            } while (selection < 1 || selection > electives.size());
             System.out.println("Input Y if you want to add another elective: ");
+            foundMatch = false;
             
-        } while (!currentElective.isEmpty() && sc.nextLine().equals("Y"));
-        selectedSpecialty.setSubjects(electives);
-        selectedSpecialty.addStudent(studentName, facultyNumber);
+        } while (sc.nextLine().equals("Y"));
+        selectedSpecialty.addStudent(studentName, facultyNumber, electivesToBeAdded, commonSubjects);
     }
     public void printSpeciltyInfo()
     {
@@ -158,6 +194,49 @@ public class Operations {
         
         for (Student s : selectedSpecialty.getStudentsBySubject(allSubjects.get(selection - 1))) {
             System.out.println(s.getName());
+        }
+    }
+    public void getAvgScore()
+    {
+        int selection, count = 0;
+        double average = 0;
+        
+        ArrayList<Subject> allSubjects = selectedSpecialty.getSubjects();
+        //ArrayList<Student> allStudents = selectedSpecialty.getStudents();
+        Subject selectedSubj;
+        if (!allSubjects.isEmpty()) {
+            for (Subject s : allSubjects) {
+                System.out.println(allSubjects.indexOf(s) + 1 + ": " + s.getSubjectName());
+            }
+            do {
+                System.out.println("Select a subject to see the average score: ");
+                selection = sc.nextInt();
+            } while (selection < 1 || selection > allSubjects.size());
+            
+            
+            selectedSubj = allSubjects.get(selection - 1);
+            Boolean checkGrades = false;
+            for (int i : selectedSpecialty.GetAvgScore(selectedSubj)) {
+                if (i == 0) {
+                    checkGrades = true;
+                    break;
+                }
+            }
+            if (!checkGrades) {
+                for (int grade : selectedSpecialty.GetAvgScore(selectedSubj) ) {
+                    average += grade;
+                    count++;
+                }
+                average /= count;
+                System.out.println("Students average grade is: " + average);
+            }else
+            {
+                System.out.println("Please input grades for all students in the selected specialty.");
+            }
+            
+        }else
+        {
+            System.out.println("Please add students to the specialty.");
         }
         
     }
