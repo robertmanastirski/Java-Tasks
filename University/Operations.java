@@ -290,14 +290,9 @@ public class Operations {
         
         
         int index = 0;
-        //JUST FOR TESTING, REMOVE AFTER !!!
-        
-        double[] justForTest = new double[]{5.50, 5.25, 6.00, 5.25, 5.00, 6.00, 5.00};
-        
-        //END TEST PIECE
         
         for (Student s : studentsList ) {
-            listToSort.add(new StudentAvgScore(s, /*averages.get(index)*/ justForTest[index]));
+            listToSort.add(new StudentAvgScore(s, averages.get(index)));
             index++;
         }
         listToSort.get(0).sort(listToSort);
@@ -320,10 +315,6 @@ public class Operations {
         for (int i = 0; i < n; i++) {
             System.out.println(listToSort.get(i).getPosition() + ", "+ listToSort.get(i).getName()+ ", "+ listToSort.get(i).getAvgScore());
         }
-        
-//        for (StudentAvgScore sas : listToSort) {
-//            System.out.println(sas.getPosition() + ", "+ sas.getName()+ ", "+ sas.getAvgScore());
-//        }
         
     }
 
