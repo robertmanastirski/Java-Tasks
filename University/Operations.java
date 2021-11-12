@@ -240,4 +240,23 @@ public class Operations {
         }
         
     }
+    public void getAvgScoreSpecialty()
+    {
+        double average = 0;
+        int count = 0;
+        ArrayList<ArrayList<Integer>> allGrades = selectedSpecialty.getAvgScoreSpecialty();
+        for (ArrayList a : allGrades) {
+            for (int i = 0; i < a.size(); i++) {
+                int o = (int)a.get(i);
+                average += o;
+                count++;
+            }
+        }
+        average /= count;
+        System.out.println("Specialty average grade is: " + average);
+    
+    }
+
+
+
 }

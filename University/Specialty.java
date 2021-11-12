@@ -1,6 +1,7 @@
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Specialty {
     private String Name;
@@ -103,5 +104,13 @@ public class Specialty {
             grades.add(s.getGradeForSubj(subject));
         }
         return grades;
+    }
+    public ArrayList<ArrayList<Integer>> getAvgScoreSpecialty()
+    {
+        ArrayList<ArrayList<Integer>> allGrades = new ArrayList<>();
+        for (Student s : students ) {
+            allGrades.add(s.getGrades());
+        }
+        return allGrades;
     }
 }
