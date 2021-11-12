@@ -122,19 +122,26 @@ public class Operations {
         
         String studentName = "";
         int facultyNumber = 0;
+        Boolean fnumExists = false;
         
         do {
             if (studentName.isEmpty()) {
                 System.out.println("Input the student name: ");
                 studentName = sc.nextLine();
             }
-            if (facultyNumber < 1) {
-                System.out.println("Input the faculty number: ");
-                facultyNumber = sc.nextInt();
-                sc.nextLine();
+            
+            fnumExists = false;
+            System.out.println("Input the faculty number: ");
+            facultyNumber = sc.nextInt();
+            sc.nextLine();
+            for (Student s : studentsList ) {
+                if (s.getFacultyNumber() == facultyNumber) {
+                    fnumExists = true;
+                    break;
+                }
             }
             
-        } while (studentName.isEmpty() || facultyNumber < 1);
+        } while (studentName.isEmpty() || facultyNumber < 1 || fnumExists);
         
         System.out.println("List of electives: ");
         for (Subject s : electives ) {
@@ -254,9 +261,70 @@ public class Operations {
         }
         average /= count;
         System.out.println("Specialty average grade is: " + average);
-    
     }
+    public void studentAvgScoreSort()
+    {
+        double average = 0;
+        int count = 0, n = 0;
+        ArrayList<ArrayList<Integer>> allGrades = selectedSpecialty.getAvgScoreSpecialty();
+        ArrayList<Double> averages = new ArrayList<>();
+        ArrayList<StudentAvgScore> listToSort = new ArrayList<>();
 
-
+        for (ArrayList a : allGrades) {
+            for (int i = 0; i < a.size(); i++) {
+                int o = (int)a.get(i);
+                average += o;
+                count++;
+            }
+            average /= count;
+            averages.add(average);
+            
+            average = 0;
+            count = 0;
+        }
+        
+        do {
+            System.out.println("Input the number of places: ");
+            n = sc.nextInt();
+        } while (n < 0 || n > studentsList.size());
+        
+        
+        int index = 0;
+        //JUST FOR TESTING, REMOVE AFTER !!!
+        
+        double[] justForTest = new double[]{5.50, 5.25, 6.00, 5.25, 5.00, 6.00, 5.00};
+        
+        //END TEST PIECE
+        
+        for (Student s : studentsList ) {
+            listToSort.add(new StudentAvgScore(s, /*averages.get(index)*/ justForTest[index]));
+            index++;
+        }
+        listToSort.get(0).sort(listToSort);
+        
+        int pos = 1;
+        
+        for (int i = 1; i < listToSort.size(); i++) {
+            if (listToSort.get(i-1).avgScore == listToSort.get(i).avgScore) {
+                if (i == 1) {
+                    listToSort.get(0).setPosition(pos);
+                }
+                listToSort.get(i).setPosition(pos);
+            }else
+            {
+                pos++;
+                listToSort.get(i).setPosition(pos);
+            }
+        }
+        
+        for (int i = 0; i < n; i++) {
+            System.out.println(listToSort.get(i).getPosition() + ", "+ listToSort.get(i).getName()+ ", "+ listToSort.get(i).getAvgScore());
+        }
+        
+//        for (StudentAvgScore sas : listToSort) {
+//            System.out.println(sas.getPosition() + ", "+ sas.getName()+ ", "+ sas.getAvgScore());
+//        }
+        
+    }
 
 }
