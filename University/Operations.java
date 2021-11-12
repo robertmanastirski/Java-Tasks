@@ -353,17 +353,6 @@ public class Operations {
     }
     public void borrowBook()
     {
-        if (!studentsList.isEmpty()) {
-            for (Student s : studentsList ) {
-                System.out.println(studentsList.indexOf(s) + 1 + ": " + s.getName());
-            }
-            showBooks();
-        }else
-        {
-            System.out.println("Please add students to the specialty");
-        }
-        
-        
-    
+        //TODO
     }
 }
