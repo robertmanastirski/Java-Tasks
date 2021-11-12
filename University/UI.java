@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class UI {
     Scanner sc = new Scanner(System.in);
     Operations op = new Operations();
+    
     private void pressAnyKeyToContinue()
     { 
         System.out.println("Press Enter key to continue...");
@@ -19,11 +20,12 @@ public class UI {
         int selectedOption = 0;
         System.out.println("1: Get information about a student in the specialty");               
         System.out.println("2: Get information about the specialty");
+        System.out.println("3: Get information about the library");
         do {
             System.out.print("Please select an option: ");
             selectedOption = sc.nextInt();
             
-        } while (selectedOption < 1 || selectedOption > 3);
+        } while (selectedOption < 1 || selectedOption > 4);
         
         switch(selectedOption)
         {
@@ -32,7 +34,9 @@ public class UI {
                     }
                     selectFirstOption(specialtyList, selectedSpecialty);
                     break;
-            case 2: selectSpecialtyOption(specialtyList, selectedSpecialty); break; 
+            case 2: selectSpecialtyOption(specialtyList, selectedSpecialty); break;
+            case 3: op.initialiseBooks();
+                    selectLibraryOption(specialtyList,selectedSpecialty); break;
         }
     }
 
@@ -97,7 +101,6 @@ public class UI {
         } while (selectedSpecialty < 1 || selectedSpecialty > specialtyList.size());
         
         selectFirstOption(specialtyList, selectedSpecialty);
-        //selectSpecialtyOption(selectedSpecialty, specialtyList);
     }
     public void selectSpecialtyOption(ArrayList<Specialty> specialtyList, int selectedSpecialty)
     {
@@ -150,5 +153,54 @@ public class UI {
         
         }
     
+    }
+    public void selectLibraryOption(ArrayList<Specialty> specialtyList, int selectedSpecialty)
+    {
+        int selection = 0;
+        System.out.println("1: Show the available books.");
+        System.out.println("2: Add a book to the library.");
+        System.out.println("3: Borrow a book from the library.");
+        System.out.println("4: Show books with quantity is 1 or lower.");
+        System.out.println("5: Show books sorted by popularity");
+        System.out.println("6: List of all books borrowed by a student");
+        System.out.println("7: List of all books that were not returned in time");
+        System.out.println("0: Exit");
+        System.out.println("-1: Return to selecting information about a specialty or a student");
+        do {
+            System.out.print("Please select an option: ");
+            selection = sc.nextInt();
+        } while (selection < -1 || selection > 7);
+        
+        switch(selection)
+        {
+            case 1: op.showBooks();
+                    pressAnyKeyToContinue();
+                    selectLibraryOption(specialtyList, selectedSpecialty);
+                    break;
+            case 2: op.addNewBook();
+                    pressAnyKeyToContinue();
+                    selectLibraryOption(specialtyList, selectedSpecialty);
+                    break;
+            case 3: //op.findSpecialty(specialtyList, selection); //TODO!!
+                    //op.borrowBook();
+                    pressAnyKeyToContinue();
+                    selectLibraryOption(specialtyList, selectedSpecialty);
+                    break;
+            case 4: //TODO
+                    pressAnyKeyToContinue();
+                    selectLibraryOption(specialtyList, selectedSpecialty);
+                    break;
+            case 5: //TODO
+                    pressAnyKeyToContinue();
+                    selectLibraryOption(specialtyList, selectedSpecialty);
+                    break;
+            case 6: //TODO
+                    pressAnyKeyToContinue();
+                    selectLibraryOption(specialtyList, selectedSpecialty);
+                    break;
+            case 0: System.exit(0); break;
+            case -1: selectFirstOption(specialtyList, selectedSpecialty); break;
+        
+        }
     }
 }

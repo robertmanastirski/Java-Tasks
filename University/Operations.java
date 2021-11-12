@@ -6,6 +6,7 @@ public class Operations {
     Student selected;
     Specialty selectedSpecialty;
     ArrayList<Student> studentsList;
+    Library lb = new Library();
     Scanner sc = new Scanner(System.in);
     
     //Metods that handle student operations
@@ -13,7 +14,7 @@ public class Operations {
     {
         int selectedStudent = 0;
         
-        try{
+        if (studentsList != null && !studentsList.isEmpty()) {
             System.out.println("Students: ");
             for (Student s : studentsList ) {
                 System.out.println(studentsList.indexOf(s) + 1 + ": " + "Name: " + s.getName());
@@ -24,7 +25,7 @@ public class Operations {
             } while (selectedStudent < 1 || selectedStudent > studentsList.size());
 
             findStudent(selectedStudent);
-        }catch(NullPointerException e)
+        }else
         {
             System.out.println("There sre currently no students in the system.");
             return false;
@@ -104,9 +105,8 @@ public class Operations {
     {
         selectedSpecialty = specilatyList.get(specialtySelection - 1);
         studentsList = selectedSpecialty.getStudents();
-        //selectedSpecialty.setSubjects();
     }
-    
+
     public void addStudentToSpecialty()
     {
         
@@ -318,4 +318,52 @@ public class Operations {
         
     }
 
+    
+    //Methods that handle library operations
+    public void initialiseBooks()
+    {
+        if (lb.checkIfEmpty()) {
+            lb.setStartBooks();
+        }
+    }
+    public void showBooks()
+    {
+        for (Book book : lb.getBooks()) {
+            System.out.println("ID: "+ book.getISBN() + ", Name: " + book.getName() + ", Author: " + book.getBookAuthor()+ ", Quantity: " + book.getCurrentQuantity());
+        }
+    }
+    public void addNewBook()
+    {
+        String bookName = "", bookAuthor = "";
+        int quantity = 0;
+        do {
+            System.out.println("Please input a book title: ");
+            bookName = sc.nextLine();
+        } while (bookName.isEmpty());
+        do {
+            System.out.println("Please input a book author: ");
+            bookAuthor = sc.nextLine();
+        } while (bookAuthor.isEmpty());
+        do {
+            System.out.println("Please input quantity: ");
+            quantity = sc.nextInt();
+        } while (quantity < 1);
+        lb.addBook(bookName, bookAuthor, quantity);
+        
+    }
+    public void borrowBook()
+    {
+        if (!studentsList.isEmpty()) {
+            for (Student s : studentsList ) {
+                System.out.println(studentsList.indexOf(s) + 1 + ": " + s.getName());
+            }
+            showBooks();
+        }else
+        {
+            System.out.println("Please add students to the specialty");
+        }
+        
+        
+    
+    }
 }
