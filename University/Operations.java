@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -353,6 +352,33 @@ public class Operations {
     }
     public void borrowBook()
     {
+        
+            int selectionStu, selectionBook;
+        
+            studentsList = selectedSpecialty.getStudents();
+            for (Student s : studentsList ) {
+                System.out.println(studentsList.indexOf(s) + 1 + " " +s.getName());
+            }
+            do {
+                System.out.println("Please select a student from the list: ");
+                selectionStu = sc.nextInt();
+            } while (selectionStu < 1);
+            
+            for (Book b : lb.getBooks()) {
+                System.out.println(lb.getBooks().indexOf(b) + 1 + ": " + b.getName());
+            }
+            do {
+                System.out.println("Please select a book from the list: ");
+                selectionBook = sc.nextInt();
+            } while (selectionBook < 1);
+            Student findStudent = studentsList.get(selectionStu - 1);
+            
+            lb.borrowBook(findStudent, selectionBook);
+            
+            
+            
+            //System.out.println(studentsList.get(selection + 1).getName());
+        
         //TODO
     }
 }

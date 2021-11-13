@@ -1,9 +1,11 @@
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Library {
     
     private ArrayList<Book> books = new ArrayList<>();
+    private ArrayList<Book> borrowed = new ArrayList<>();
     
     public void setStartBooks()
     {
@@ -30,8 +32,18 @@ public class Library {
         int lastIndex = books.size();
         books.add(new Book(lastIndex + 1, bookName, bookAuthor, currentQuantity));
     }
-    public void borrowBook()
+    public void borrowBook(Student stu, int selectionBook)
     {
-        //TODO
+        Book findBook = books.get(selectionBook - 1);
+        Date date = new Date();
+        
+        findBook.setBorrowedBy(stu);
+        findBook.setBorrowedDate(date.getDate(), date.getMonth() + 1, date.getYear() + 1900);
+        
+        //TODO:
+        //WHEN A BOOK IS BORROWED CHANGE THE QUANTITY IN ARRAYLIST BOOKS
+        //RETURN INFO ON WHEN THE BOOK SHOULD BE RETURNED TO THE LIBRARY
+        
+        borrowed.add(findBook);
     }
 }

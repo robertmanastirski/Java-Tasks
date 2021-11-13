@@ -181,8 +181,8 @@ public class UI {
                     pressAnyKeyToContinue();
                     selectLibraryOption(specialtyList, selectedSpecialty);
                     break;
-            case 3: //op.findSpecialty(specialtyList, selection); //TODO!!
-                    //op.borrowBook();
+            case 3: op.findSpecialty(specialtyList, selectedSpecialty);
+                    op.borrowBook();
                     pressAnyKeyToContinue();
                     selectLibraryOption(specialtyList, selectedSpecialty);
                     break;
