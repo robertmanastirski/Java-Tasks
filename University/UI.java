@@ -160,16 +160,17 @@ public class UI {
         System.out.println("1: Show the available books.");
         System.out.println("2: Add a book to the library.");
         System.out.println("3: Borrow a book from the library.");
-        System.out.println("4: Show books with quantity is 1 or lower.");
-        System.out.println("5: Show books sorted by popularity");
-        System.out.println("6: List of all books borrowed by a student");
-        System.out.println("7: List of all books that were not returned in time");
+        System.out.println("4: Return a book.");
+        System.out.println("5: Show books with quantity is 1 or lower.");
+        System.out.println("6: Show books sorted by popularity");
+        System.out.println("7: List of all books borrowed by a student");
+        System.out.println("8: List of all books that were not returned in time");
         System.out.println("0: Exit");
         System.out.println("-1: Return to selecting information about a specialty or a student");
         do {
             System.out.print("Please select an option: ");
             selection = sc.nextInt();
-        } while (selection < -1 || selection > 7);
+        } while (selection < -1 || selection > 8);
         
         switch(selection)
         {
@@ -186,15 +187,24 @@ public class UI {
                     pressAnyKeyToContinue();
                     selectLibraryOption(specialtyList, selectedSpecialty);
                     break;
-            case 4: //TODO
+            case 4: op.findSpecialty(specialtyList, selectedSpecialty);
+                    op.returnBook();
                     pressAnyKeyToContinue();
                     selectLibraryOption(specialtyList, selectedSpecialty);
                     break;
-            case 5: //TODO
+            case 5: op.showLowerThanOne();
                     pressAnyKeyToContinue();
                     selectLibraryOption(specialtyList, selectedSpecialty);
                     break;
-            case 6: //TODO
+            case 6: op.sortPopularity();
+                    pressAnyKeyToContinue();
+                    selectLibraryOption(specialtyList, selectedSpecialty);
+                    break;
+            case 7: op.sortBooksByStudent();
+                    pressAnyKeyToContinue();
+                    selectLibraryOption(specialtyList, selectedSpecialty);
+                    break;
+            case 8: //TODO
                     pressAnyKeyToContinue();
                     selectLibraryOption(specialtyList, selectedSpecialty);
                     break;

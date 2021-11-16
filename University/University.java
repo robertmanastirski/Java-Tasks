@@ -26,6 +26,5 @@ public class University {
         loadSpecialty();
         UI ui = new UI();
         ui.selectSpecialty(specialtyList);
-        
     }
 }

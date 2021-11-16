@@ -30,15 +30,20 @@ public class Book extends Library{
     {
         return ISBN;
     }
-    public int getCurrentQuantity()
+    public Integer getCurrentQuantity()
     {
         return currentQuantity;
     }
+    public Student getBorrowedBy()
+    {
+        return borrowedBy;
+    }
     public void setReturnDate()
     {
-          returnDate.setMonth(borrowedDate.getMonth() + 1);
-          returnDate.setYear(borrowedDate.getYear() + 1);
+        returnDate.setMonth(borrowedDate.getMonth() + 1);
+        returnDate.setYear(borrowedDate.getYear() + 1);
     }
+    
     public String getReturnDate()
     {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/Y");

@@ -352,27 +352,90 @@ public class Operations {
     }
     public void borrowBook()
     {
-        
-            int selectionStu, selectionBook;
-        
-            studentsList = selectedSpecialty.getStudents();
-            for (Student s : studentsList ) {
-                System.out.println(studentsList.indexOf(s) + 1 + " " +s.getName());
+        int selectionStu, selectionBook;
+
+        for (Student s : studentsList ) {
+            System.out.println(studentsList.indexOf(s) + 1 + " " +s.getName());
+        }
+        do {
+            System.out.println("Please select a student from the list: ");
+            selectionStu = sc.nextInt();
+        } while (selectionStu < 1 || selectionStu > studentsList.size());
+
+        for (Book b : lb.getBooks()) {
+            System.out.println(lb.getBooks().indexOf(b) + 1 + ": " + b.getName());
+        }
+        do {
+            System.out.println("Please select a book from the list: ");
+            selectionBook = sc.nextInt();
+        } while (selectionBook < 1);
+        Student findStudent = studentsList.get(selectionStu - 1);
+
+        lb.borrowBook(findStudent, selectionBook);
+    }
+    public void returnBook()
+    {
+        int selectionStu, selectionBook = 0;
+        ArrayList<Book> borrowedByStudent = new ArrayList();
+        for (Student s : studentsList ) {
+            System.out.println(studentsList.indexOf(s) + 1 + " " +s.getName());
+        }
+        do {
+            System.out.println("Please select a student from the list: ");
+            selectionStu = sc.nextInt();
+        } while (selectionStu < 1);
+        Student findStudent = studentsList.get(selectionStu - 1);
+        for (Book b : lb.getBorrowed()) {
+            if (b.getBorrowedBy() == findStudent) {
+                borrowedByStudent.add(b);
             }
-            do {
-                System.out.println("Please select a student from the list: ");
-                selectionStu = sc.nextInt();
-            } while (selectionStu < 1);
-            
-            for (Book b : lb.getBooks()) {
-                System.out.println(lb.getBooks().indexOf(b) + 1 + ": " + b.getName());
+        }
+        if (borrowedByStudent.isEmpty()) {
+            System.out.println("This student has not borrowed any books.");
+        }else
+        {
+            for (Book b : borrowedByStudent ) {
+                System.out.println(borrowedByStudent.indexOf(b) + 1 + ": " + b.getName());
             }
             do {
                 System.out.println("Please select a book from the list: ");
                 selectionBook = sc.nextInt();
             } while (selectionBook < 1);
-            Student findStudent = studentsList.get(selectionStu - 1);
+            lb.returnBook(selectionBook);
+        }
+        
+        
             
-            lb.borrowBook(findStudent, selectionBook);
     }
+    public void showLowerThanOne()
+    {
+        for (Book b : lb.showLowerThanOne()) {
+            System.out.println("ID: "+ b.getISBN() + ", Name: " + b.getName() + ", Author: " + b.getBookAuthor()+ ", Quantity: " + b.getCurrentQuantity());
+        }
+    }
+    public void sortPopularity()
+    {
+        for (Book b : lb.sortByPopularity()) {
+            System.out.println("ID: "+ b.getISBN() + ", Name: " + b.getName() + ", Author: " + b.getBookAuthor()+ ", Quantity: " + b.getCurrentQuantity());
+        }
+    }
+    public void sortBooksByStudent()
+    {
+        int selectionStu;
+
+        for (Student s : studentsList ) {
+            System.out.println(studentsList.indexOf(s) + 1 + " " +s.getName());
+        }
+        do {
+            System.out.println("Please select a student from the list: ");
+            selectionStu = sc.nextInt();
+        } while (selectionStu < 1 || selectionStu > studentsList.size());
+        Student findStudent = studentsList.get(selectionStu - 1);
+
+       
+        for (Book book : lb.sortBooksByStudent(findStudent)) {
+            System.out.println("ID: "+ book.getISBN() + ", Name: " + book.getName() + ", Author: " + book.getBookAuthor()+ ", Return date: " + book.getReturnDate());
+        }
+    }
+    
 }
