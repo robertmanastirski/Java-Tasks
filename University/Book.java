@@ -1,4 +1,5 @@
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Book extends Library{
@@ -7,9 +8,8 @@ public class Book extends Library{
     private int ISBN;
     private int currentQuantity;
     private Student borrowedBy;
-    private int borrowedDay;
-    private int borrowedMonth;
-    private int borrowedYear;
+    Date borrowedDate;
+    Date returnDate = new Date();
     
     public Book(int ISBN, String bookName, String bookAuthor, int currentQuantity)
     {
@@ -34,15 +34,28 @@ public class Book extends Library{
     {
         return currentQuantity;
     }
+    public void setReturnDate()
+    {
+          returnDate.setMonth(borrowedDate.getMonth() + 1);
+          returnDate.setYear(borrowedDate.getYear() + 1);
+    }
+    public String getReturnDate()
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/Y");
+        return sdf.format(returnDate);
+    }
+    public void setCurrentQuantity(int currentQuantity)
+    {
+        this.currentQuantity = currentQuantity;
+    }
     public void setBorrowedBy(Student borrowedBy)
     {
         this.borrowedBy = borrowedBy;
     }
-    public void setBorrowedDate(int day, int month, int year)
+    public void setBorrowedDate(Date date)
     {
-        this.borrowedDay = day;
-        this.borrowedMonth = month;
-        this.borrowedYear = year;
+          this.borrowedDate = date;
+
     }
     
 }

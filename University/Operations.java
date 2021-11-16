@@ -374,11 +374,5 @@ public class Operations {
             Student findStudent = studentsList.get(selectionStu - 1);
             
             lb.borrowBook(findStudent, selectionBook);
-            
-            
-            
-            //System.out.println(studentsList.get(selection + 1).getName());
-        
-        //TODO
     }
 }

@@ -32,16 +32,22 @@ public class Library {
         int lastIndex = books.size();
         books.add(new Book(lastIndex + 1, bookName, bookAuthor, currentQuantity));
     }
+    public void removeQuantity()
+    {
+        
+    }
     public void borrowBook(Student stu, int selectionBook)
     {
         Book findBook = books.get(selectionBook - 1);
         Date date = new Date();
         
         findBook.setBorrowedBy(stu);
-        findBook.setBorrowedDate(date.getDate(), date.getMonth() + 1, date.getYear() + 1900);
+        findBook.setBorrowedDate(date);
+        findBook.setReturnDate();
+        System.out.println("Book borrowed on: " + findBook.getBorrowedDate());
+        System.out.println("Book should be returned on: " + findBook.getReturnDate());
         
         //TODO:
-        //WHEN A BOOK IS BORROWED CHANGE THE QUANTITY IN ARRAYLIST BOOKS
         //RETURN INFO ON WHEN THE BOOK SHOULD BE RETURNED TO THE LIBRARY
         
         borrowed.add(findBook);
