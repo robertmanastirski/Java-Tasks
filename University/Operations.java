@@ -4,7 +4,9 @@ import java.util.Scanner;
 public class Operations {
     Student selected;
     Specialty selectedSpecialty;
+    Specialty spec = new Specialty();
     ArrayList<Student> studentsList;
+    ArrayList<Student> allSpecialtyStudents = new ArrayList<>();
     Library lb = new Library();
     Scanner sc = new Scanner(System.in);
     
@@ -26,7 +28,7 @@ public class Operations {
             findStudent(selectedStudent);
         }else
         {
-            System.out.println("There sre currently no students in the system.");
+            System.out.println("There are currently no students in the system.");
             return false;
         }
         return true;
@@ -100,9 +102,24 @@ public class Operations {
     
     
     //Methods that handle specialty operations
-    public void findSpecialty(ArrayList<Specialty> specilatyList, int specialtySelection)
+    public int listSpecialties()
     {
-        selectedSpecialty = specilatyList.get(specialtySelection - 1);
+        
+        ArrayList<Specialty> specList = spec.getSpecialties();
+        int selectedSpec = 0;
+        for (Specialty spec : specList) {
+            System.out.println(specList.indexOf(spec) + 1 + ": " +"Specialty Name: " + spec.getName() + ", Course Year: " + spec.getCourseYear());
+        }
+        do {
+            System.out.print("Please select a specialy: ");
+            selectedSpec = sc.nextInt();
+        } while (selectedSpec < 0 || selectedSpec > spec.getSpecialties().size());
+        
+        return selectedSpec;
+    }
+    public void findSpecialty(int specialtySelection)
+    {
+        selectedSpecialty = spec.getSpecialties().get(specialtySelection - 1);
         studentsList = selectedSpecialty.getStudents();
     }
 
@@ -208,7 +225,6 @@ public class Operations {
         double average = 0;
         
         ArrayList<Subject> allSubjects = selectedSpecialty.getSubjects();
-        //ArrayList<Student> allStudents = selectedSpecialty.getStudents();
         Subject selectedSubj;
         if (!allSubjects.isEmpty()) {
             for (Subject s : allSubjects) {
@@ -350,17 +366,28 @@ public class Operations {
         lb.addBook(bookName, bookAuthor, quantity);
         
     }
+    public void getStudetFromAllSpecialties()
+    {
+        ArrayList updateAL = new ArrayList<>();
+        for (Specialty s : spec.getSpecialties()) {
+            updateAL.addAll(s.getStudents());
+        }
+        if (allSpecialtyStudents.isEmpty() || !allSpecialtyStudents.equals(updateAL)) {
+            allSpecialtyStudents.clear();
+            allSpecialtyStudents.addAll(updateAL);
+        }
+    }
     public void borrowBook()
     {
         int selectionStu, selectionBook;
 
-        for (Student s : studentsList ) {
-            System.out.println(studentsList.indexOf(s) + 1 + " " +s.getName());
+        for (Student s : allSpecialtyStudents ) {
+            System.out.println(allSpecialtyStudents.indexOf(s) + 1 + " " +s.getName());
         }
         do {
             System.out.println("Please select a student from the list: ");
             selectionStu = sc.nextInt();
-        } while (selectionStu < 1 || selectionStu > studentsList.size());
+        } while (selectionStu < 1 || selectionStu > allSpecialtyStudents.size());
 
         for (Book b : lb.getBooks()) {
             System.out.println(lb.getBooks().indexOf(b) + 1 + ": " + b.getName());
@@ -369,7 +396,7 @@ public class Operations {
             System.out.println("Please select a book from the list: ");
             selectionBook = sc.nextInt();
         } while (selectionBook < 1);
-        Student findStudent = studentsList.get(selectionStu - 1);
+        Student findStudent = allSpecialtyStudents.get(selectionStu - 1);
 
         lb.borrowBook(findStudent, selectionBook);
     }
@@ -377,14 +404,14 @@ public class Operations {
     {
         int selectionStu, selectionBook = 0;
         ArrayList<Book> borrowedByStudent = new ArrayList();
-        for (Student s : studentsList ) {
-            System.out.println(studentsList.indexOf(s) + 1 + " " +s.getName());
+        for (Student s : allSpecialtyStudents ) {
+            System.out.println(allSpecialtyStudents.indexOf(s) + 1 + " " +s.getName());
         }
         do {
             System.out.println("Please select a student from the list: ");
             selectionStu = sc.nextInt();
         } while (selectionStu < 1);
-        Student findStudent = studentsList.get(selectionStu - 1);
+        Student findStudent = allSpecialtyStudents.get(selectionStu - 1);
         for (Book b : lb.getBorrowed()) {
             if (b.getBorrowedBy() == findStudent) {
                 borrowedByStudent.add(b);
@@ -423,14 +450,14 @@ public class Operations {
     {
         int selectionStu;
 
-        for (Student s : studentsList ) {
-            System.out.println(studentsList.indexOf(s) + 1 + " " +s.getName());
+        for (Student s : allSpecialtyStudents ) {
+            System.out.println(allSpecialtyStudents.indexOf(s) + 1 + " " +s.getName());
         }
         do {
             System.out.println("Please select a student from the list: ");
             selectionStu = sc.nextInt();
-        } while (selectionStu < 1 || selectionStu > studentsList.size());
-        Student findStudent = studentsList.get(selectionStu - 1);
+        } while (selectionStu < 1 || selectionStu > allSpecialtyStudents.size());
+        Student findStudent = allSpecialtyStudents.get(selectionStu - 1);
 
        
         for (Book book : lb.sortBooksByStudent(findStudent)) {

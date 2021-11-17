@@ -38,7 +38,7 @@ public class Library {
         int lastIndex = books.size();
         books.add(new Book(lastIndex + 1, bookName, bookAuthor, currentQuantity));
     }
-    public void borrowBook(Student stu, int selectionBook)      //Make so a student cannot borrow more than 1 of the same book.
+    public void borrowBook(Student stu, int selectionBook)
     {
         Book findBook = books.get(selectionBook - 1);
         Boolean foundMatch = false;

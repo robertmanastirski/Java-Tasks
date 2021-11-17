@@ -6,6 +6,22 @@ import java.util.List;
 public class Specialty {
     private String Name;
     private int courseYear;
+    private ArrayList<Specialty> specialtyList = new ArrayList<>();
+    private ArrayList<Student> students = new ArrayList<>();
+    
+    public Specialty()
+    {
+        specialtyList.add(new Specialty("Business Informational Technologies", 1));
+        specialtyList.add(new Specialty("Business Informational Technologies", 2));
+        specialtyList.add(new Specialty("Business Informational Technologies", 3));
+        specialtyList.add(new Specialty("Business Informational Technologies", 4));
+        specialtyList.add(new Specialty("Software Engineering", 1));
+        specialtyList.add(new Specialty("Software Engineering", 2));
+        specialtyList.add(new Specialty("Software Engineering", 3));
+        specialtyList.add(new Specialty("Software Engineering", 4));
+        
+    }
+    
     private ArrayList<Subject> commonSubjects = new ArrayList<>(Arrays.asList(
                                                                 new Subject("Programming with Java"),
                                                                 new Subject("Linear Algebra"),
@@ -16,7 +32,6 @@ public class Specialty {
                                                             new Subject("Android Programming"),
                                                             new Subject("Programming with Python") ));
     private ArrayList<Subject> allSubjects = new ArrayList<>();
-    private ArrayList<Student> students = new ArrayList<>();
     
     public Specialty(String name, int courseYear)
     {
@@ -39,7 +54,10 @@ public class Specialty {
     {
         return commonSubjects;
     }
-    
+    public ArrayList<Specialty> getSpecialties()
+    {
+        return specialtyList;
+    }
     public ArrayList<Subject> getSubjects()
     {
         if (allSubjects.isEmpty()) {
@@ -77,7 +95,7 @@ public class Specialty {
         
         for (Student s : students ) {
             for (String str : s.getSubjectNames() ) {
-                if (subject.getSubjectName().contains(str)) {
+                if (subject.getSubjectName().equals(str)) {
                     studentsBySubject.add(s);
                 }
             }

@@ -10,7 +10,6 @@ public class StudentAvgScore {
     
     public StudentAvgScore(Student student, double avgScore)
     {
-       //this.place = place;
        this.student = student;
        this.avgScore = avgScore;
     }

@@ -15,32 +15,54 @@ public class UI {
         catch(Exception e)
         {}  
     }
-    public void selectFirstOption(ArrayList<Specialty> specialtyList, int selectedSpecialty)
+    public void selectFirstOption()
     {
         int selectedOption = 0;
-        System.out.println("1: Get information about a student in the specialty");               
-        System.out.println("2: Get information about the specialty");
-        System.out.println("3: Get information about the library");
+        System.out.println("1: Select a specialty");               
+        System.out.println("2: Get information about the library");
+        System.out.println("0: Exit");
         do {
             System.out.print("Please select an option: ");
             selectedOption = sc.nextInt();
             
-        } while (selectedOption < 1 || selectedOption > 4);
+        } while (selectedOption < 0 || selectedOption > 2);
+        switch (selectedOption) 
+        {
+            case 1: int selectedSpecialty = op.listSpecialties();
+                    op.findSpecialty(selectedSpecialty);
+                    selectSecondOption(selectedSpecialty);
+            case 2: op.initialiseBooks();
+                    selectLibraryOption(); break;
+            case 0: System.exit(0); break;
+        } 
+    }
+    public void selectSecondOption(int selectedSpecialty)
+    {
+        int selectedOption = 0;
+        System.out.println("1: Get information about a student in the specialty");               
+        System.out.println("2: Get information about the specialty");
+        System.out.println("-1: Get information about the specialty");
+        do {
+            System.out.print("Please select an option: ");
+            selectedOption = sc.nextInt();
+            
+        } while (selectedOption < -1 || selectedOption > 2);
         
         switch(selectedOption)
         {
-            case 1: if (op.selectStudent()) {
-                        selectStudentOption(specialtyList,selectedSpecialty);
+            case 1: op.findSpecialty(selectedSpecialty);
+                    if (op.selectStudent()) {
+                        selectStudentOption(selectedSpecialty);
                     }
-                    selectFirstOption(specialtyList, selectedSpecialty);
+                    selectSecondOption(selectedSpecialty);
                     break;
-            case 2: selectSpecialtyOption(specialtyList, selectedSpecialty); break;
-            case 3: op.initialiseBooks();
-                    selectLibraryOption(specialtyList,selectedSpecialty); break;
+            case 2: selectSpecialtyOption(selectedSpecialty); break;
+            case 0: System.exit(0); break;
+            case -1: selectFirstOption(); break;
         }
     }
 
-    public void selectStudentOption(ArrayList<Specialty> specialtyList, int selectedSpecialty)
+    public void selectStudentOption(int selectedSpecialty)
     {
         int selection = 0;
         System.out.println("1: Add a grade for a subject.");
@@ -60,49 +82,34 @@ public class UI {
         {
             case 1: op.addSubjectAndGrade();
                     pressAnyKeyToContinue();
-                    selectStudentOption(specialtyList,selectedSpecialty);
+                    selectStudentOption(selectedSpecialty);
                     break;
             case 2: op.subjectCount();
                     pressAnyKeyToContinue();
-                    selectStudentOption(specialtyList,selectedSpecialty);
+                    selectStudentOption(selectedSpecialty);
                     break;
             case 3: op.listOfSubjects();
                     pressAnyKeyToContinue();
-                    selectStudentOption(specialtyList,selectedSpecialty);
+                    selectStudentOption(selectedSpecialty);
                     break;
             case 4: op.subjectGrade();
                     pressAnyKeyToContinue();
-                    selectStudentOption(specialtyList,selectedSpecialty);
+                    selectStudentOption(selectedSpecialty);
                     break;
             case 5: op.averageScore();
                     pressAnyKeyToContinue();
-                    selectStudentOption(specialtyList,selectedSpecialty);
+                    selectStudentOption(selectedSpecialty);
                     break;
             case 6: op.getInfo();
                     pressAnyKeyToContinue();
-                    selectStudentOption(specialtyList,selectedSpecialty);
+                    selectStudentOption(selectedSpecialty);
                     break;
             case 0: System.exit(0); break;
-            case -1: selectFirstOption(specialtyList, selectedSpecialty); break;
+            case -1: selectSecondOption(selectedSpecialty); break;
         
         }
     }
-    public void selectSpecialty(ArrayList<Specialty> specialtyList)
-    {
-        int selectedSpecialty = 0;
-        
-        System.out.println("Specialties: ");
-        for (Specialty s : specialtyList ) {
-            System.out.println(specialtyList.indexOf(s) + 1 + ": " +"Specialty Name: " + s.getName() + ", Course Year: " + s.getCourseYear());
-        }
-        do {
-            System.out.print("Please select a specialty: ");
-            selectedSpecialty = sc.nextInt();
-        } while (selectedSpecialty < 1 || selectedSpecialty > specialtyList.size());
-        
-        selectFirstOption(specialtyList, selectedSpecialty);
-    }
-    public void selectSpecialtyOption(ArrayList<Specialty> specialtyList, int selectedSpecialty)
+    public void selectSpecialtyOption(int selectedSpecialty)
     {
         int selection = 0;
         System.out.println("1: Add student to specialty.");
@@ -119,42 +126,41 @@ public class UI {
             sc.nextLine();
         } while (selection < -1 || selection > 6);
         
-        op.findSpecialty(specialtyList, selectedSpecialty);
         switch(selection)
         {
             case 1: op.addStudentToSpecialty();
                     pressAnyKeyToContinue();
-                    selectSpecialtyOption(specialtyList, selectedSpecialty);
+                    selectSpecialtyOption(selectedSpecialty);
                     break;
             case 2: op.printSpeciltyInfo();
                     pressAnyKeyToContinue();
-                    selectSpecialtyOption(specialtyList, selectedSpecialty);
+                    selectSpecialtyOption(selectedSpecialty);
                     break;
             case 3: op.getStudentsBySubject();
                     pressAnyKeyToContinue();
-                    selectSpecialtyOption(specialtyList, selectedSpecialty);
+                    selectSpecialtyOption(selectedSpecialty);
                     break;
             case 4: op.getAvgScore();
                     pressAnyKeyToContinue();
-                    selectSpecialtyOption(specialtyList, selectedSpecialty);
+                    selectSpecialtyOption(selectedSpecialty);
                     break;
             case 5: op.getAvgScoreSpecialty();
                     pressAnyKeyToContinue();
-                    selectSpecialtyOption(specialtyList, selectedSpecialty);
+                    selectSpecialtyOption(selectedSpecialty);
                     break;      
                     
             case 6: op.studentAvgScoreSort();
                     pressAnyKeyToContinue();
-                    selectSpecialtyOption(specialtyList, selectedSpecialty);
+                    selectSpecialtyOption(selectedSpecialty);
                     break; 
                     
             case 0: System.exit(0); break;
-            case -1: selectFirstOption(specialtyList, selectedSpecialty); break;
+            case -1: selectSecondOption(selectedSpecialty); break;
         
         }
     
     }
-    public void selectLibraryOption(ArrayList<Specialty> specialtyList, int selectedSpecialty)
+    public void selectLibraryOption()
     {
         int selection = 0;
         System.out.println("1: Show the available books.");
@@ -166,7 +172,7 @@ public class UI {
         System.out.println("7: List of all books borrowed by a student");
         System.out.println("8: List of all books that were not returned in time");
         System.out.println("0: Exit");
-        System.out.println("-1: Return to selecting information about a specialty or a student");
+        System.out.println("-1: Return to selecting a specialty");
         do {
             System.out.print("Please select an option: ");
             selection = sc.nextInt();
@@ -176,40 +182,40 @@ public class UI {
         {
             case 1: op.showBooks();
                     pressAnyKeyToContinue();
-                    selectLibraryOption(specialtyList, selectedSpecialty);
+                    selectLibraryOption();
                     break;
             case 2: op.addNewBook();
                     pressAnyKeyToContinue();
-                    selectLibraryOption(specialtyList, selectedSpecialty);
+                    selectLibraryOption();
                     break;
-            case 3: op.findSpecialty(specialtyList, selectedSpecialty);
+            case 3: op.getStudetFromAllSpecialties();
                     op.borrowBook();
                     pressAnyKeyToContinue();
-                    selectLibraryOption(specialtyList, selectedSpecialty);
+                    selectLibraryOption();
                     break;
-            case 4: op.findSpecialty(specialtyList, selectedSpecialty);
+            case 4: op.getStudetFromAllSpecialties();
                     op.returnBook();
                     pressAnyKeyToContinue();
-                    selectLibraryOption(specialtyList, selectedSpecialty);
+                    selectLibraryOption();
                     break;
             case 5: op.showLowerThanOne();
                     pressAnyKeyToContinue();
-                    selectLibraryOption(specialtyList, selectedSpecialty);
+                    selectLibraryOption();
                     break;
             case 6: op.sortPopularity();
                     pressAnyKeyToContinue();
-                    selectLibraryOption(specialtyList, selectedSpecialty);
+                    selectLibraryOption();
                     break;
             case 7: op.sortBooksByStudent();
                     pressAnyKeyToContinue();
-                    selectLibraryOption(specialtyList, selectedSpecialty);
+                    selectLibraryOption();
                     break;
             case 8: op.booksLateForReturn();
                     pressAnyKeyToContinue();
-                    selectLibraryOption(specialtyList, selectedSpecialty);
+                    selectLibraryOption();
                     break;
             case 0: System.exit(0); break;
-            case -1: selectFirstOption(specialtyList, selectedSpecialty); break;
+            case -1: selectFirstOption(); break;
         
         }
     }

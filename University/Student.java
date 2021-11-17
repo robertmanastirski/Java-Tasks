@@ -2,8 +2,6 @@ import java.util.ArrayList;
 public class Student {
     private String studentName;
     private int facultyNumber;
-    //private ArrayList<Subject> electives;
-    //private ArrayList<Subject> commonSubjects;
     private ArrayList<Subject> allSubjects = new ArrayList<>();
     
     public Student(String studentName, int facultyNumber, ArrayList<Subject> commonSubjects, ArrayList<Subject> electives)
@@ -12,9 +10,6 @@ public class Student {
         this.facultyNumber = facultyNumber;
         allSubjects.addAll(commonSubjects);
         allSubjects.addAll(electives);
-        //this.commonSubjects = commonSubjects;
-        //this.electives = electives;
-        //testAdd();
     }
     public int showSubjects()
     {
