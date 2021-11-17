@@ -38,20 +38,49 @@ public class Library {
         int lastIndex = books.size();
         books.add(new Book(lastIndex + 1, bookName, bookAuthor, currentQuantity));
     }
-    public void borrowBook(Student stu, int selectionBook)
+    public void borrowBook(Student stu, int selectionBook)      //Make so a student cannot borrow more than 1 of the same book.
     {
         Book findBook = books.get(selectionBook - 1);
+        Boolean foundMatch = false;
         Date date = new Date();
         
-        System.out.println("Book should be returned on: " + findBook.getReturnDate());
-        borrowed.add(new Book(findBook.getISBN(), findBook.getName(), findBook.getBookAuthor(), findBook.getCurrentQuantity()));
-        findBook.setCurrentQuantity(findBook.getCurrentQuantity() - 1);
-        
-        Book findBorrowed = borrowed.get(borrowed.size() - 1);
-        findBorrowed.setBorrowedBy(stu);
-        findBorrowed.setBorrowedDate(date);
-        findBorrowed.setReturnDate();
-        findBorrowed.setCurrentQuantity(findBook.getCurrentQuantity() - 1);
+        if (borrowed.isEmpty()) {
+            System.out.println("Book should be returned on: " + findBook.getReturnDateFormat());
+            borrowed.add(new Book(findBook.getISBN(), findBook.getName(), findBook.getBookAuthor(), findBook.getCurrentQuantity()));
+            findBook.setCurrentQuantity(findBook.getCurrentQuantity() - 1);
+
+            Book findBorrowed = borrowed.get(borrowed.size() - 1);
+            findBorrowed.setBorrowedBy(stu);
+            findBorrowed.setBorrowedDate(date);
+            findBorrowed.setReturnDate();
+            findBorrowed.setCurrentQuantity(findBook.getCurrentQuantity() - 1);
+        }else
+        {
+            for (Book b : borrowed ) {
+                
+                if (b.getBorrowedBy().getName().equals(stu.getName()) && !b.getName().equals(findBook.getName()) ) {
+                    foundMatch = false;
+                }else
+                {
+                   foundMatch = true;
+                   break;
+                }
+            }
+            if (!foundMatch) {
+                System.out.println("Book should be returned on: " + findBook.getReturnDateFormat());
+                borrowed.add(new Book(findBook.getISBN(), findBook.getName(), findBook.getBookAuthor(), findBook.getCurrentQuantity()));
+                findBook.setCurrentQuantity(findBook.getCurrentQuantity() - 1);
+
+                Book findBorrowed = borrowed.get(borrowed.size() - 1);
+                findBorrowed.setBorrowedBy(stu);
+                findBorrowed.setBorrowedDate(date);
+                findBorrowed.setReturnDate();
+                findBorrowed.setCurrentQuantity(findBook.getCurrentQuantity() - 1);
+            }else
+            {
+                System.out.println("Book has been already borrowed by the student");
+            }
+        }
     }
     public void returnBook(int selectionBook)
     {
@@ -101,10 +130,29 @@ public class Library {
         Collections.sort(borrowedByStudent, new Comparator<Book>() {
             @Override
             public int compare(Book o1, Book o2) {
-                return o1.getReturnDate().compareTo(o2.getReturnDate());
+                return o1.getReturnDateFormat().compareTo(o2.getReturnDateFormat());
             }
         });
         
         return borrowedByStudent;
+    }
+    public ArrayList<Book> lateReturn()
+    {
+        Date date = new Date();
+        ArrayList<Book> lateToReturn = new ArrayList<>();
+        for (Book b : borrowed ) {
+            if (date.after(b.getReturnDate())) {
+                lateToReturn.add(b);
+            }
+        }
+        
+        Collections.sort(lateToReturn, new Comparator<Book>() {
+            @Override
+            public int compare(Book o1, Book o2) {
+                return o1.getReturnDateFormat().compareTo(o2.getReturnDateFormat());
+            }
+        });
+        
+        return lateToReturn;
     }
 }

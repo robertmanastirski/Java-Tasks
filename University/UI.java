@@ -204,7 +204,7 @@ public class UI {
                     pressAnyKeyToContinue();
                     selectLibraryOption(specialtyList, selectedSpecialty);
                     break;
-            case 8: //TODO
+            case 8: op.booksLateForReturn();
                     pressAnyKeyToContinue();
                     selectLibraryOption(specialtyList, selectedSpecialty);
                     break;

@@ -434,8 +434,13 @@ public class Operations {
 
        
         for (Book book : lb.sortBooksByStudent(findStudent)) {
-            System.out.println("ID: "+ book.getISBN() + ", Name: " + book.getName() + ", Author: " + book.getBookAuthor()+ ", Return date: " + book.getReturnDate());
+            System.out.println("ID: "+ book.getISBN() + ", Name: " + book.getName() + ", Author: " + book.getBookAuthor()+ ", Return date: " + book.getReturnDateFormat());
         }
     }
-    
+    public void booksLateForReturn()
+    {
+        for (Book b : lb.lateReturn()) {
+            System.out.println("Book name: " + b.getName() + ", Borrowed by student: " + b.getBorrowedBy().getName() + ", Return date: " + b.getReturnDateFormat());
+        }
+    }
 }

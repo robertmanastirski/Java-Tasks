@@ -41,13 +41,17 @@ public class Book extends Library{
     public void setReturnDate()
     {
         returnDate.setMonth(borrowedDate.getMonth() + 1);
-        returnDate.setYear(borrowedDate.getYear() + 1);
+        returnDate.setYear(borrowedDate.getYear());
     }
     
-    public String getReturnDate()
+    public String getReturnDateFormat()
     {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/Y");
         return sdf.format(returnDate);
+    }
+    public Date getReturnDate()
+    {
+        return returnDate;
     }
     public void setCurrentQuantity(int currentQuantity)
     {
